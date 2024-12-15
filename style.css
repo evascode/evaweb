@@ -1,0 +1,99 @@
+/* Body Style for Centering */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;    /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    min-height: 100vh;      /* Ensure full height view */
+}
+
+/* Profile Section */
+.profile-section {
+   
+    margin-bottom: 0px; /* Add space below the profile section */
+    margin-top: 10px; /* Reduce gap at the top */
+}
+
+/* Profile Picture */
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+    border-radius: 5px; /* Square placeholder */
+    background-color: #f9f9f9;
+    color: #aaa;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px auto; /* Reduced space below the picture */
+}
+
+/* Profile Name */
+.profile-name {
+    font-size: 1.5em;
+    margin: 5px 0;
+}
+
+/* Contact Button */
+.contact-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 5px 0 5px 0; /* Reduced space above and below the button */
+}
+
+.contact-button:hover {
+    background-color: #0056b3;
+}
+
+/* Posts Section */
+.posts-section {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 600px; /* Limit the width of the posts section */
+    width: 100%;
+    margin-top: 0cm; /* Bring posts closer to the profile section */
+    margin-bottom: 300px; /* Remove extra spacing below the posts */
+}
+
+/* Register Button */
+.register-button {
+    position: absolute; /* Position Register button in the corner */
+    top: 20px;
+    right: 20px;
+    width: 120px;
+    height: 40px;
+    background-color: #007BFF;
+    color: #fff;
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 0;
+}
+
+.register-button:hover {
+    background-color: #0056b3;
+}
+
+
