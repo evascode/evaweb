@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <nav>
         <span id="userGreeting"></span>
-        <button id="authButton">Log In</button>
+        <a href="login.html" id="authButton" class="login-button">Log In</a>
         <a href="register.html" class="register-button">Register</a>
-    </nav>    
+    </nav>
     
-
     <div class="profile-section">
         <div class="profile-pic" id="profilePic">
             <span>No Profile Picture</span>
@@ -28,48 +28,30 @@
         <h2>Main Posts</h2>
     </div>
 
-    <script>
-        // Login/Logout Logic
-        const loggedInUser = localStorage.getItem('loggedInUser');
-        const userGreeting = document.getElementById('userGreeting');
-        const authButton = document.getElementById('authButton');
+   <script>
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const authButton = document.getElementById('authButton');
+    const userGreeting = document.getElementById('userGreeting');
 
-        if (loggedInUser) {
-            userGreeting.textContent = `Welcome, ${loggedInUser}!`;
-            authButton.textContent = "Log Out";
+    if (loggedInUser) {
+        userGreeting.textContent = `Welcome, ${loggedInUser}!`;
+        authButton.textContent = "Log Out";
+        authButton.classList.add('logout-button');
+        authButton.href = "#"; // Prevent redirection
 
-            authButton.addEventListener('click', () => {
-                localStorage.removeItem('loggedInUser');
-                alert('You have logged out successfully!');
-                window.location.href = 'login.html';
-            });
-        } else {
-            userGreeting.textContent = "Welcome, Guest!";
-            authButton.textContent = "Log In";
-
-            authButton.addEventListener('click', () => {
-                window.location.href = 'login.html';
-            });
-        }
-
-        // Display Posts Dynamically
-        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-        const postsSection = document.querySelector('.posts-section');
-        posts.forEach(post => {
-            const newPost = document.createElement('div');
-            newPost.classList.add('post');
-            newPost.innerHTML = `
-                <h3>${post.title}</h3>
-                <p>${post.content}</p>
-            `;
-            postsSection.appendChild(newPost);
-            if (posts.length === 0) {
-    postsSection.innerHTML = '<p>No posts to display.</p>';
-}
-
+        authButton.addEventListener('click', () => {
+            localStorage.removeItem('loggedInUser'); // Remove user data
+            alert('You have logged out successfully!');
+            window.location.reload(); // Refresh the page
         });
+    } else {
+        userGreeting.textContent = "Welcome, Guest!";
+        authButton.textContent = "Log In";
+        authButton.classList.remove('logout-button');
+        authButton.href = "login.html"; // Redirect to the login page
+    }
+</script>
 
-    </script>
 
     <script>
     const profilePic = document.getElementById('profilePic');
