@@ -124,23 +124,21 @@
     </script>      
     <script>
         document.querySelector('form').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent default form submission
-
-    const username = document.querySelector('input[type="text"]').value.trim();
-    const password = document.querySelector('input[type="password"]').value.trim();
-
-    if (username === 'eva' && password === '1196300400@') {
-        localStorage.setItem('loggedInUser', 'eva'); // Save admin username
-        localStorage.setItem('isAdmin', 'true');    // Mark as admin
-        alert('Welcome, Admin! Redirecting to Admin Page...');
-        window.location.href = 'admin.html';        // Redirect to Admin Page
-    } else {
-        localStorage.setItem('loggedInUser', username); // Save username
-        localStorage.setItem('isAdmin', 'false');       // Mark as regular user
-        alert('Login successful! Redirecting to Home Page...');
-        window.location.href = 'index.html';            // Redirect to Home Page
-    }
-});
+        e.preventDefault();
+        const username = document.querySelector('#username').value.trim();
+        const password = document.querySelector('#password').value.trim();
+    
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const userExists = users.some(user => user.username === username && user.password === password);
+    
+        if (userExists) {
+            localStorage.setItem('loggedInUser', username); // Mark user as logged in
+            alert('Login successful!');
+            window.location.href = 'index.html'; // Redirect to the homepage
+        } else {
+            alert('Invalid username or password.');
+        }
+    });   
 </script>
     </body>
 </html>

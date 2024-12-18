@@ -10,7 +10,9 @@
     <nav>
         <span id="userGreeting"></span>
         <button id="authButton">Log In</button>
-    </nav>
+        <a href="register.html" class="register-button">Register</a>
+    </nav>    
+    
 
     <div class="profile-section">
         <div class="profile-pic" id="profilePic">
@@ -21,7 +23,10 @@
             Contact Her
         </button>
     </div>
-
+    <div class="profile-pic" id="profilePic">
+        <span>No Profile Picture</span>
+    </div>
+    
     <div class="posts-section">
         <h2>Main Posts</h2>
     </div>
@@ -61,7 +66,21 @@
                 <p>${post.content}</p>
             `;
             postsSection.appendChild(newPost);
+            if (posts.length === 0) {
+    postsSection.innerHTML = '<p>No posts to display.</p>';
+}
+
         });
+
     </script>
+
+    <script>
+    const profilePic = document.getElementById('profilePic');
+    const storedProfilePic = localStorage.getItem('profilePic');
+
+    if (storedProfilePic) {
+        profilePic.innerHTML = `<img src="${storedProfilePic}" alt="Profile Picture">`;
+    }
+</script>
 </body>
 </html>
