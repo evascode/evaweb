@@ -187,7 +187,7 @@ nav a:hover {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    animation: fadeInOut 5s forwards;
+    animation: fadeInOut 4s forwards;
     z-index: 20; /* Ensure it appears above other elements */
 }
 
