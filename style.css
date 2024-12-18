@@ -134,38 +134,45 @@ body {
     }
 }
 
+    
+
 /* Navigation Bar */
 nav {
-    position: absolute;
-    top: 0;
-    right: 20px;
-    display: flex;
-    gap: 10px; /* Add space between buttons */
+    position: relative; /* Position relative to contain elements */
+    display: flex; /* Align elements in a row */
+    justify-content: flex-end; /* Align buttons to the right */
+    align-items: center; /* Vertically center items */
+    gap: 10px; /* Space between elements */
     padding: 10px;
+    background-color: #f1f1f1;
 }
 
-/* Shared Button Style */
-nav a {
+/* Greeting Text */
+#userGreeting {
+    margin-right: auto; /* Pushes greeting text to the left */
+    font-size: 1em;
+    color: #333;
+    z-index: 1; /* Ensures it's above the background */
+}
+
+/* Navigation Buttons */
+nav a, #authButton {
     width: 120px;
     height: 40px;
     background-color: #007BFF;
     color: white;
     text-align: center;
-    line-height: 40px;
+    line-height: 40px; /* Centers text vertically */
     font-size: 0.9em;
     font-weight: bold;
     border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
+    z-index: 2; /* Ensures buttons are on top */
 }
 
-nav a:hover {
+nav a:hover, #authButton:hover {
     background-color: #0056b3;
-}
-
-/* Log Out Button Style */
-.logout-button {
-    background-color: gray;
 }
 
 .logout-button:hover {
