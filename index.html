@@ -146,39 +146,51 @@
 
 
     <script>
-        // Check if the user is logged in
-        const loggedInUser = localStorage.getItem('loggedInUser');
-    
-        if (loggedInUser) {
-            // Display a welcome message
-            const profileSection = document.querySelector('.profile-section');
-            const welcomeMessage = document.createElement('p');
-            welcomeMessage.textContent = `Welcome, ${loggedInUser}!`;
-            profileSection.appendChild(welcomeMessage);
-    
-            // Enable the comment section
-            document.getElementById('commentSection').style.display = 'block';
-        } else {
-            // Hide the comment section if not logged in
-            document.getElementById('commentSection').style.display = 'none';
-        }
-    
-        // Handle comment submission
-        document.getElementById('commentForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
-    
-            // Get the comment text
-            const comment = document.getElementById('commentInput').value;
-    
-            // Add the comment to the list
-            const commentList = document.getElementById('commentList');
-            const commentItem = document.createElement('li');
-            commentItem.textContent = comment;
-            commentList.appendChild(commentItem);
-    
-            // Clear the input
-            document.getElementById('commentInput').value = '';
+                // Check if the user is logged in
+        const loggedInUser = localStorage.getItem('loggedInUser'); // Get the logged-in user from localStorage
+
+        // Modify the posts display logic
+        posts.forEach(post => {
+            const newPost = document.createElement('div');
+            newPost.classList.add('post');
+            newPost.innerHTML = `
+                <h3>${post.title}</h3>
+                <p>${post.content}</p>
+                <div class="comment-section">
+                    <h4>Comments</h4>
+                    <ul class="comment-list"></ul>
+                    ${loggedInUser ? `
+                        <form class="comment-form">
+                            <textarea class="comment-input" placeholder="Write your comment here..." required></textarea>
+                            <button type="submit">Post Comment</button>
+                        </form>
+                    ` : `
+                        <p><em>You must <a href="login.html">log in</a> to comment.</em></p>
+                    `}
+                </div>
+            `;
+            postsSection.appendChild(newPost);
+
+            // Attach comment functionality for logged-in users
+            if (loggedInUser) {
+                const commentForm = newPost.querySelector('.comment-form');
+                commentForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const commentInput = commentForm.querySelector('.comment-input');
+                    const commentList = newPost.querySelector('.comment-list');
+
+                    // Add the comment to the list
+                    const commentItem = document.createElement('li');
+                    commentItem.textContent = commentInput.value;
+                    commentList.appendChild(commentItem);
+
+                    // Clear the input field
+                    commentInput.value = '';
+                });
+            }
         });
+
     </script>
     <script>
         // Handle comment submission for each post
@@ -251,6 +263,24 @@
         });
     </script>
     
+    <nav>
+        <p>Welcome, <span id="loggedInUsername"></span>!</p>
+        <button id="logoutButton">Log Out</button>
+    </nav>
+    <script>
+        const loggedInUsername = localStorage.getItem('loggedInUser');
+    
+        if (loggedInUser) {
+            document.getElementById('loggedInUsername').textContent = loggedInUser;
+        } else {
+            window.location.href = 'login.html'; // Redirect if not logged in
+        }
+    
+        document.getElementById('logoutButton').addEventListener('click', function () {
+            localStorage.removeItem('loggedInUser'); // Remove logged-in user
+            alert('Logged out successfully!');
+            window.location.href = 'login.html'; // Redirect to login page
+        });
+    </script>
     </body>
 </html>
-
