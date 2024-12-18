@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .login-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007BFF;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 80%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Log In</h1>
+        <form>
+            <input type="text" placeholder="Username or Email" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+        </form>
+    </div>
+    <script>
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    
+        if (isAdmin) {
+            document.getElementById('adminPostSection').style.display = 'block';
+    
+            document.getElementById('newPostForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+    
+                const postTitle = document.getElementById('postTitle').value;
+                const postContent = document.getElementById('postContent').value;
+                const postsSection = document.querySelector('.posts-section');
+    
+                // Create a new post dynamically
+                const newPost = document.createElement('div');
+                newPost.classList.add('post');
+                newPost.innerHTML = `
+                    <h3>${postTitle}</h3>
+                    <p>${postContent}</p>
+                    <div class="comment-section">
+                        <h4>Comments</h4>
+                        <form class="comment-form">
+                            <textarea class="comment-input" placeholder="Write your comment here..." required></textarea>
+                            <button type="submit">Post Comment</button>
+                        </form>
+                        <ul class="comment-list"></ul>
+                    </div>
+                `;
+                postsSection.appendChild(newPost);
+    
+                // Clear form fields
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postContent').value = '';
+            });
+        }
+    </script>
+    <script>
+                document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const username = document.querySelector('input[type="text"]').value.trim();
+            const password = document.querySelector('input[type="password"]').value.trim();
+
+            // Check for admin credentials
+            if (username === 'eva' && password === '1196300400@') {
+                localStorage.setItem('loggedInUser', 'eva');  // Save admin username
+                localStorage.setItem('isAdmin', 'true');      // Mark as admin (stored as string)
+                alert('Welcome, Admin! Redirecting to Admin Page...');
+                window.location.href = 'admin.html';          // Redirect to Admin Page
+            } else {
+                // Redirect all other users to index.html
+                localStorage.setItem('loggedInUser', username); // Save username
+                localStorage.setItem('isAdmin', 'false');       // Mark as regular user
+                alert('Access Denied! Redirecting to Home Page...');
+                window.location.href = 'index.html';            // Redirect to Home Page
+            }
+        });
+    </script>      
+    </body>
+</html>

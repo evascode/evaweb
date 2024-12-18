@@ -51,6 +51,7 @@
             align-items: center; /* Center text vertically */
             justify-content: center; /* Center text horizontally */
             padding: 0; /* Remove unnecessary padding */
+            z-index: 10; /* Bring to the foreground */
         }
 
         .register-button:hover {
@@ -100,18 +101,156 @@
 
     <div class="posts-section">
         <h2>Main Posts</h2>
-        <p>This is where the main content of your website will go.</p>
+    <div class="post" id="post1">
+        <h3>Post Title 1</h3>
+        <p>This is the content of the first post.</p>
+        <div class="comment-section">
+            <h4>Comments</h4>
+            <form class="comment-form" data-post-id="post1">
+                <textarea class="comment-input" placeholder="Write your comment here..." required></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
+            <ul class="comment-list"></ul>
+        </div>
     </div>
 
-    <!-- Register Button -->
-    <a href="register.html" class="register-button">Register</a>
-</body>
-
-        <!-- Register Button -->
-        <a href="register.html" class="register-button">
-            Register
-        </a>
+    <div class="post" id="post2">
+        <h3>Post Title 2</h3>
+        <p>This is the content of the second post.</p>
+        <div class="comment-section">
+            <h4>Comments</h4>
+            <form class="comment-form" data-post-id="post2">
+                <textarea class="comment-input" placeholder="Write your comment here..." required></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
+            <ul class="comment-list"></ul>
+        </div>
     </div>
-</body>
+</div>
+
+            <!-- Register and Log In Buttons -->
+        <a href="register.html" class="register-button">Register</a>
+        <a href="login.html" class="login-button">Log In</a>
+        <link rel="stylesheet" href="style.css">
+
+
+    <div id="commentSection" style="display: none;">
+        <h3>Comments</h3>
+        <form id="commentForm">
+            <textarea id="commentInput" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
+        <ul id="commentList"></ul>
+    </div>
+</div>
+
+
+    <script>
+        // Check if the user is logged in
+        const loggedInUser = localStorage.getItem('loggedInUser');
+    
+        if (loggedInUser) {
+            // Display a welcome message
+            const profileSection = document.querySelector('.profile-section');
+            const welcomeMessage = document.createElement('p');
+            welcomeMessage.textContent = `Welcome, ${loggedInUser}!`;
+            profileSection.appendChild(welcomeMessage);
+    
+            // Enable the comment section
+            document.getElementById('commentSection').style.display = 'block';
+        } else {
+            // Hide the comment section if not logged in
+            document.getElementById('commentSection').style.display = 'none';
+        }
+    
+        // Handle comment submission
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+    
+            // Get the comment text
+            const comment = document.getElementById('commentInput').value;
+    
+            // Add the comment to the list
+            const commentList = document.getElementById('commentList');
+            const commentItem = document.createElement('li');
+            commentItem.textContent = comment;
+            commentList.appendChild(commentItem);
+    
+            // Clear the input
+            document.getElementById('commentInput').value = '';
+        });
+    </script>
+    <script>
+        // Handle comment submission for each post
+        document.querySelectorAll('.comment-form').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+    
+                const postId = form.getAttribute('data-post-id');
+                const commentInput = form.querySelector('.comment-input');
+                const commentList = document.querySelector(`#${postId} .comment-list`);
+    
+                // Add the comment to the list
+                const commentItem = document.createElement('li');
+                commentItem.textContent = commentInput.value;
+                commentList.appendChild(commentItem);
+    
+                // Clear the input field
+                commentInput.value = '';
+            });
+        });
+    </script>
+    <script>
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    
+        if (isAdmin) {
+            document.getElementById('adminPostSection').style.display = 'block';
+    
+            document.getElementById('newPostForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+    
+                const postTitle = document.getElementById('postTitle').value;
+                const postContent = document.getElementById('postContent').value;
+                const postsSection = document.querySelector('.posts-section');
+    
+                // Create a new post dynamically
+                const newPost = document.createElement('div');
+                newPost.classList.add('post');
+                newPost.innerHTML = `
+                    <h3>${postTitle}</h3>
+                    <p>${postContent}</p>
+                    <div class="comment-section">
+                        <h4>Comments</h4>
+                        <form class="comment-form">
+                            <textarea class="comment-input" placeholder="Write your comment here..." required></textarea>
+                            <button type="submit">Post Comment</button>
+                        </form>
+                        <ul class="comment-list"></ul>
+                    </div>
+                `;
+                postsSection.appendChild(newPost);
+    
+                // Clear form fields
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postContent').value = '';
+            });
+        }
+    </script>
+    <script>
+        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+        const postsSection = document.querySelector('.posts-section');
+    
+        posts.forEach(post => {
+            const newPost = document.createElement('div');
+            newPost.classList.add('post');
+            newPost.innerHTML = `
+                <h3>${post.title}</h3>
+                <p>${post.content}</p>
+            `;
+            postsSection.appendChild(newPost);
+        });
+    </script>
+    
+    </body>
 </html>
 

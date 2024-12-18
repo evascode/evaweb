@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Post Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Admin Post Management</h1>
+        <div id="adminPostSection" style="display: none;">
+            <h2>Create or Edit Posts</h2>
+            <form id="newPostForm">
+                <input type="text" id="postTitle" placeholder="Post Title" required>
+                <textarea id="postContent" placeholder="Post Content" required></textarea>
+                <button type="submit">Save Post</button>
+            </form>
+            <div id="postsContainer">
+                <h2>Existing Posts</h2>
+                <div id="existingPosts"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+            const isAdmin = localStorage.getItem('isAdmin') === 'true'; // Compare with "true" (string)
+
+    if (isAdmin) {
+        // Admin access granted
+        document.getElementById('adminPostSection').style.display = 'block';
+
+        // Load existing posts
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            const postsContainer = document.getElementById('existingPosts');
+            postsContainer.innerHTML = posts.map((post, index) => `
+                <div>
+                    <h3>${post.title}</h3>
+                    <p>${post.content}</p>
+                    <button onclick="editPost(${index})">Edit</button>
+                    <button onclick="deletePost(${index})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        // Delete a post
+        function deletePost(index) {
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            posts.splice(index, 1); // Remove the selected post
+            localStorage.setItem('posts', JSON.stringify(posts));
+            loadPosts(); // Refresh the post list
+        }
+
+        // Edit a post
+        function editPost(index) {
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            const post = posts[index];
+            document.getElementById('postTitle').value = post.title;
+            document.getElementById('postContent').value = post.content;
+
+            // Update post on save
+            document.getElementById('newPostForm').onsubmit = function (e) {
+                e.preventDefault();
+                post.title = document.getElementById('postTitle').value.trim();
+                post.content = document.getElementById('postContent').value.trim();
+                localStorage.setItem('posts', JSON.stringify(posts));
+                alert('Post Updated Successfully!');
+                loadPosts();
+                document.getElementById('newPostForm').reset();
+                document.getElementById('newPostForm').onsubmit = handleNewPost;
+            };
+        }
+
+        // Handle new post creation
+        function handleNewPost(e) {
+            e.preventDefault();
+
+            const postTitle = document.getElementById('postTitle').value.trim();
+            const postContent = document.getElementById('postContent').value.trim();
+
+            if (!postTitle || !postContent) {
+                alert('Please fill in both fields.');
+                return;
+            }
+
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            posts.push({ title: postTitle, content: postContent });
+            localStorage.setItem('posts', JSON.stringify(posts));
+
+            document.getElementById('newPostForm').reset();
+            alert('Post Created Successfully!');
+            loadPosts();
+        }
+
+        document.getElementById('newPostForm').onsubmit = handleNewPost;
+
+        // Initial load of posts
+        loadPosts();
+    } else {
+        // Admin access denied
+        alert('Access Denied! Redirecting to login page...');
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 500); // Add a slight delay before redirecting
+    }
+    </script>
+</body>
+</html>

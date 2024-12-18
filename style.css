@@ -51,7 +51,7 @@ body {
     border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
-    margin: 5px 0 5px 0; /* Reduced space above and below the button */
+    margin: 5px 0 10px 0; /* Reduced space above and below the button */
 }
 
 .contact-button:hover {
@@ -73,9 +73,9 @@ body {
 
 /* Register Button */
 .register-button {
-    position: absolute; /* Position Register button in the corner */
+    position: absolute;
     top: 20px;
-    right: 20px;
+    right: 150px; /* Move left to avoid overlap */
     width: 120px;
     height: 40px;
     background-color: #007BFF;
@@ -89,11 +89,46 @@ body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    padding: 0;
+    z-index: 10;
 }
 
 .register-button:hover {
     background-color: #0056b3;
+}
+
+.login-button {
+    position: absolute;
+    top: 20px;
+    right: 20px; /* Leave in the top-right corner */
+    width: 120px;
+    height: 40px;
+    background-color: #007BFF;
+    color: #fff;
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    z-index: 10;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .register-button {
+        top: 10px;
+        right: 10px; /* Adjust positioning */
+    }
+    .login-button {
+        top: 60px; /* Move below Register button */
+        right: 10px;
+    }
 }
 
 

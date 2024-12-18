@@ -69,5 +69,19 @@
             <button type="submit">Register</button>
         </form>
     </div>
+
+    <!-- Add this script -->
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Simulate saving user data (in a real app, you would send this to a server)
+            const username = document.getElementById('registerUsername').value;
+            localStorage.setItem('loggedInUser', username); // Save user in localStorage
+
+            // Redirect to index.html
+            window.location.href = 'index.html';
+        });
+    </script>
 </body>
 </html>
