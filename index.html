@@ -76,5 +76,25 @@
         }, 5000);
     });
 </script>
+<script>
+    // Show the welcome message if the user just logged in
+    document.addEventListener('DOMContentLoaded', () => {
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const showWelcomeMessage = localStorage.getItem('showWelcomeMessage');
+
+        if (showWelcomeMessage === 'true') {
+            // Display the animated welcome message
+            welcomeMessage.style.opacity = '1';
+
+            // Remove the message after 5 seconds
+            setTimeout(() => {
+                welcomeMessage.style.display = 'none';
+            }, 5000);
+
+            // Clear the welcome message flag
+            localStorage.removeItem('showWelcomeMessage');
+        }
+    });
+</script>
 </body>
 </html>
