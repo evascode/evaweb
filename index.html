@@ -267,6 +267,36 @@
         <p>Welcome, <span id="loggedInUsername"></span>!</p>
         <button id="logoutButton">Log Out</button>
     </nav>
+    <nav>
+        <span id="userGreeting"></span>
+        <button id="authButton"></button>
+    </nav>
+    <script>
+        const loggedInUser = localStorage.getItem('loggedInUser'); // Check login status
+        const userGreeting = document.getElementById('userGreeting');
+        const authButton = document.getElementById('authButton');
+    
+        // Update navigation based on login status
+        if (loggedInUser) {
+            userGreeting.textContent = `Welcome, ${loggedInUser}!`;
+            authButton.textContent = "Log Out";
+    
+            // Handle log out
+            authButton.addEventListener('click', () => {
+                localStorage.removeItem('loggedInUser'); // Remove user data
+                alert('You have logged out successfully!');
+                window.location.href = 'login.html'; // Redirect to login page
+            });
+        } else {
+            userGreeting.textContent = "Welcome, Guest!";
+            authButton.textContent = "Log In";
+    
+            // Redirect to login page on click
+            authButton.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        }
+    </script>
     <script>
         const loggedInUsername = localStorage.getItem('loggedInUser');
     
